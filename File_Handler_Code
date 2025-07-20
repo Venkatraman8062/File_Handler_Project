@@ -1,0 +1,1668 @@
+Introduction
+Accurate and efficient management of product information is essential for the success of e-commerce businesses. This information enables informed decision-making and facilitates effective marketing strategies. However, traditional methods of handling product data may be cumbersome and prone to errors. They often involve manual entry and maintenance processes, leading to inconsistencies and inefficiencies. By harnessing the capabilities of Python programming, we can develop a solution that automates tasks such as adding, reading, updating, and deleting product information. This streamlined approach not only enhances data accuracy and reliability but also improves operational efficiency.
+
+The kind of operations that we are going to focus on have an acronym: CRUD (Create, Read, Update, Delete).
+
+CRUD operations represent the four basic functions that are essential to interact with a database or a data storage system. The acronym CRUD stands for Create, Read, Update, and Delete. These operations form the foundation of most applications that store and manipulate data. Understanding CRUD is crucial for developers working on web, software, and database applications. Here's a brief overview of each operation:
+
+Create: This operation is used to add new records to a database. It involves inserting data into a database table or a data structure. For example, adding a new user to a user database is a Create operation.
+
+Read: This operation is used to retrieve or read data from a database. It involves querying the database to fetch information based on certain criteria. For example, fetching all the information about a product is a Read operation.
+
+Update: This operation is used to modify existing data in a database. It involves updating one or more fields of a database record. For example, changing a user's email address in a user database is an Update operation.
+
+Delete: This operation is used to remove records from a database. It involves deleting one or more records from a database table. For example, removing a user from a user database is a Delete operation.
+
+These operations are vital for managing data effectively in any application. They allow applications to perform basic data management tasks, ensuring that the data is accurate, consistent, and accessible.
+
+Problem Statement
+Your task is to develop a product information management system for an e-commerce platform that facilitates the creation, retrieval, updation, and deletion of product details, sales data, and description.
+
+To solve this, you will first load the whole dataset into the computer's memory and provide the users an option to choose between the CRUD operations. When the user has made a choice, you will perform the chosen operation by allowing the user to input the required information. When the user is done with their task and chooses to exit the program, you will save the new files in the same folder by overwriting the files.
+
+Data Description
+The dataset for this project has been provided in the filehandler_data.zip file. It contains data about products for which the unique ID provided is the stock keeping unit or SKU for short. The ZIP file contains a structured collection of sales data and product information organized into a main folder with three key components:
+
+Sales Data (sales_data.csv): A CSV file that includes sales data for various products over a 14-day period. Each row corresponds to a different product, identified by a Product_SKU. The columns Day1 through Day14 represent the sales figures for each consecutive day.
+
+Product Descriptions (product_descriptions folder): This folder contains text files, each corresponding to a specific product identified by the SKU in the filename (e.g., description_AISJDKFJW93NJ.txt). These files provide descriptive information about the products.
+
+Product Details (product_details folder): This folder includes JSON files, again with filenames corresponding to product SKUs (e.g., details_AISJDKFJW93NJ.json). These files contain detailed attributes of the products, such as specifications, category, pricing, etc.
+
+This dataset is suitable for analyzing daily sales performance of products, supplemented with detailed product information and descriptions to allow for a comprehensive analysis of sales trends in relation to product attributes and descriptions.
+
+Outline
+The overall objective of this project is to create a system for managing product information in an e-commerce platform. The different stages involved in the process are outlined below:
+
+Stage 1 - Setup
+Task 1 - Import required modules
+Task 2 - Load the data
+Task 3 - Explore the data
+Stage 2 - Create
+Task 4 - Add sales data
+Task 5 - Add product details
+Task 6 - Add product description
+Task 7 - Create function
+Stage 3 - Read
+Task 8 - Display sales data
+Task 9 - Display product details
+Task 10 - Display product description
+Task 11 - Read function
+Stage 4 - Update
+Task 12 - Update sales data
+Task 13 - Update product details
+Task 14 - Update product description
+Task 15 - Update function
+Stage 5 - Delete
+Task 16 - Delete function
+Stage 6 - Bringing it all together
+Task 17 - Save data to disk
+Task 18 - Create a user menu
+Stage 1 - Setup
+In this stage, you will set up the environment for this assignment by loading the required modules and files. You will explore the files by displaying their content. You will achieve all of this by completing the following three tasks:
+
+Task 1 - Import required modules
+Task 2 - Load the data
+Task 3 - Explore the data
+Task 1 - Import required modules
+Description
+In this task, you will import all the necessary modules and packages required for performing various operations in the project.
+
+Requirements
+Write code to import packages:
+
+For handling raw data files
+For working with JSON files
+For working with CSV files
+For printing Python data structures in an organized manner
+Recommendations
+You can ask ChatGPT about the libraries that will be required to perform the given tasks.
+First, import the required packages.
+
+
+[ ]
+# Use this cell to import all the required packages and methods
+
+# Import package for handling raw data files
+import os
+
+# Import package for working with JSON files
+import json
+
+# Import package for working with CSV files
+import csv
+import pandas as pd
+
+# Import package to print complex data structures like dictionaries or lists in a structured and organized way
+import pprint
+
+
+Checklist
+Imported the required packages.
+Task 2 - Load the data
+Description
+In this task, you will write a function that ensures that the necessary files are loaded into the environment. To index the data, you will use a unique identifier called SKU.
+
+This includes loading sales data from a CSV file, product details from JSON files, and product descriptions from text files. We recommend that you either use Jupyter Notebook or Google Colab to build and execute your code.
+
+Requirements
+In case you are using Google Colab:
+
+import drive from google.colab and mount your Google Drive, or
+import files from google.colab.
+In case you are using Jupyter Notebook, please make sure that your files and folders are all in the right place.
+
+Unzip the data and save the location of the main folder in a variable called main_folder_address.
+
+Define a function load_data():
+
+The function must read
+
+Sales data from sales_data.csv file,
+Product details from JSON files in the product_details folder, and
+Product descriptions from the TXT files in product_descriptions folder.
+Once the data has been loaded, it must be stored in three dictionaries, one for sales data, another for product details, and another for product descriptions.
+
+The three dictionaries should have the product SKU as keys and:
+
+In the product_details dictionary, the values should also be dictionaries containing detailed attributes of the products, such as specifications, category, pricing, etc.
+In the sales_data dictionary, the values should be lists consisting of the sales data from the last 14 days.
+In the product_descriptions dictionary, the values should be strings in which the product description is saved.
+It should have the following keyword argument:
+
+mainfolder: A string that describes the address of the parent data folder in the memory.
+The functions should return a tuple containing three dictionaries:
+
+product_details: A dictionary of dictionaries where keys are product SKUs (extracted from the filenames of the JSON files) and values are product details loaded from the JSON files.
+sales_data: A dictionary where keys are product SKUs (from the CSV file) and values are lists of quantities corresponding to sales data.
+product_descriptions: A dictionary where keys are product SKUs (extracted from the filenames of the TXT files) and values are product descriptions loaded from TXT files.
+Recommendations
+If you are using Google Colab:
+Upload the zip file containing the files in Google Drive or upload the zip file directly to the Google Colab runtime.
+Then unzip it using unzip shell command which you can access using the ! (exclamation mark) character.
+Once you have mounted Google Drive into your Google Colab VM or uploaded the zip file directly to the Google Colab runtime.
+You can use the Files section on the left to access the filesystem. You can right click on a file or folder to copy its path. This will be useful while specifying the source file in the unzip shell command.
+You will need to pass the location of the main folder into the load_data() function to load sales_data.csv file and the files in product_details and product_description folders.
+Inside the load_data() function, you can:
+use the csv.DictReader() method to read the sales_data.csv file,
+use the os.listdir() method to obtain the names of the files and folders within a particular folder,
+use os.path.join() to construct file paths,
+use the json.load() method to load JSON files, and
+use the open() function to load the text files.
+As you need to use the SKUs as keys in all three dictionaries, you can ask ChatGPT on how to extract the SKU values in all three cases.
+In sales_data.csv they have been saved in a column titled Product_SKU
+For the other two, you need to extract the SKU from the file name. Try using the in-built string function split().
+Provide the data description and requirements to ChatGPT along with the libraries that you are using and ask it to generate code for the function.
+If you get stuck somewhere, you can ask ChatGPT to explain the code to you and you can make edits as required.
+First, if you are using Google Colab, mount Google Drive to your VM. If not, skip and comment out this cell.
+
+
+[ ]
+from google.colab import drive
+drive.mount('/content/drive')
+Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount("/content/drive", force_remount=True).
+
+[ ]
+# Use this cell to write your code for mounting your Google Drive
+# Note: If you are not using Google Colab, please skip this cell
+
+# In case you are using Google Colab, mount your Google Drive before moving on
+# from google.colab import drive
+# drive.mount('/content/drive', force_remount = True)
+If you are using Colab, after mounting the drive you need to unzip the files to extract all the images inside it. Note that you don't need to perform this step more than once, so we recommend that you comment out your code for this step once it has executed.
+
+
+[ ]
+# Use this cell to write your code for unzipping the data and storing it in Google Drive
+# Note: If you are not using Google Colab, please skip this cell
+# Note: You can comment out this cell after running it once
+
+# Unzip your files and store them in your drive
+# !unzip /content/drive/MyDrive/File_Handler_Project/mainfolder.zip
+You can also upload files to the Google Colab runtime environment without mounting Google Drive. In this case so you will always be in the same path/directory inside your Google Colab runtime. Files will be saved into your runtime and not into your Google Drive. The files you uploaded will be available until you delete the runtime.
+
+
+[ ]
+# Use this cell to write your code for uploading the zip file
+# Note: If you are not using Google Colab, please skip this cell
+
+# Upload the zip file to Google Colab runtime
+# from google.colab import files
+# uploaded = files.upload()
+After uploading your zip file to Google Colab runtime you need to unzip the files to extract all the files inside it.
+
+
+[ ]
+# Use this cell to write your code for unzipping the data and storing it in Google Colab runtime
+# Note: If you are not using Google Colab, please skip this cell
+# Note: You can comment out this cell after running it once
+
+# Unzip your files and store them in Google Colab runtime
+!unzip /content/drive/MyDrive/mainfolder.zip
+Archive:  /content/drive/MyDrive/mainfolder.zip
+   creating: mainfolder/product_descriptions/
+  inflating: mainfolder/product_descriptions/AISJDKFJW93NJ.txt  
+  inflating: mainfolder/product_descriptions/DJKFIEI432FIE.txt  
+  inflating: mainfolder/product_descriptions/GGOENEBJ079499.txt  
+  inflating: mainfolder/product_descriptions/HJSKNWK429DJE.txt  
+  inflating: mainfolder/product_descriptions/JFKL3940NFKLJ.txt  
+  inflating: mainfolder/product_descriptions/LKDFJ49LSDJKL.txt  
+  inflating: mainfolder/product_descriptions/MWKDI3JFK39SL.txt  
+  inflating: mainfolder/product_descriptions/NEKFJOWE9FDIW.txt  
+  inflating: mainfolder/product_descriptions/OWEJL398FWJLK.txt  
+  inflating: mainfolder/product_descriptions/XPLFJW2490XJN.txt  
+   creating: mainfolder/product_details/
+  inflating: mainfolder/product_details/AISJDKFJW93NJ.json  
+  inflating: mainfolder/product_details/DJKFIEI432FIE.json  
+  inflating: mainfolder/product_details/GGOENEBJ079499.json  
+  inflating: mainfolder/product_details/HJSKNWK429DJE.json  
+  inflating: mainfolder/product_details/JFKL3940NFKLJ.json  
+  inflating: mainfolder/product_details/LKDFJ49LSDJKL.json  
+  inflating: mainfolder/product_details/MWKDI3JFK39SL.json  
+  inflating: mainfolder/product_details/NEKFJOWE9FDIW.json  
+  inflating: mainfolder/product_details/OWEJL398FWJLK.json  
+  inflating: mainfolder/product_details/XPLFJW2490XJN.json  
+  inflating: mainfolder/sales_data.csv  
+Now define the load_data() function.
+
+
+[ ]
+def load_data(main_folder):
+    """
+    Load product details, sales data, and product descriptions from files within the specified zip file.
+
+    Args:
+        main_folder (str): The path to the zip file containing the dataset.
+
+    Returns:
+        tuple: A tuple containing three dictionaries:
+            - product_details (dict): A dictionary of dictionaries where keys are product SKUs (extracted from the filenames of the JSON files)
+              and values are product details loaded from the JSON files.
+            - sales_data (dict): A dictionary where keys are product SKUs (from the CSV file) and values are lists
+              of quantities corresponding to sales data.
+            - product_descriptions (dict): A dictionary where keys are product SKUs (extracted from the filenames of the TXT files)
+              and values are product descriptions loaded from TXT files.
+    """
+    # Load data from extracted files
+    product_details = {}
+    sales_data = {}
+    product_descriptions = {}
+
+    # Load sales data from CSV file
+    csv_file_path = os.path.join(main_folder, 'sales_data.csv')
+    with open(csv_file_path, 'r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        for row in csv_reader:
+            sku = row['product_SKU']
+            quantities = [int(quantity) for quantity in list(row.values())[1:]]  # Skip the first value (sku) and convert the rest
+            sales_data[sku] = quantities
+
+    # Load product details from JSON files
+    details_dir = os.path.join(main_folder, 'product_details')
+    for filename in sorted(os.listdir(details_dir)):
+        json_file_path = os.path.join(details_dir, filename)
+        with open(json_file_path, 'r') as json_file:
+            sku = filename.split('.')[0]
+            product_details[sku] = json.load(json_file)
+
+    # Load product description from TXT files
+    descriptions_dir = os.path.join(main_folder, 'product_descriptions')
+    for filename in sorted(os.listdir(descriptions_dir)):
+        txt_file_path = os.path.join(descriptions_dir, filename)
+        with open(txt_file_path, 'r') as txt_file:
+            sku = filename.split('.')[0]
+            product_descriptions[sku] = txt_file.read()
+
+    return product_details, sales_data, product_descriptions
+
+Check your code here
+
+
+[ ]
+# Use this cell to load the files
+main_folder_address = '/content/mainfolder'
+product_details, sales_data, product_descriptions = load_data(main_folder_address)
+Checklist
+Defined the load_data() function which takes in the given keyword arguments and returns the given variables.
+Used the load_data() function to load data into sales_data, product_details and product_descriptions.
+sales_data, product_details and product_descriptions are of the type dict.
+Items in sales_data, product_details, and product_descriptions are as follows:
+sales_data contains product SKUs mapped to lists of integers representing the amount of product sold per day,
+product_details contains product SKUs mapped to dictionaries containing various details such as product name, brand, model, specifications, price, and availability, and
+product_descriptions contains product SKUs mapped to strings representing descriptions of the corresponding products.
+Task 3 - Explore the data
+Description
+In this task, you will explore the loaded data by displaying its content. This includes displaying sales data, product details, and product description of a product using its product SKU.
+
+Requirements
+Dispaly sales data, product details, and product descriptions of all products.
+Create a list named product_skus which contains product SKUs extracted from one of the dictionaries using dict.keys().
+Display sales data, product details, and product description of a product using its product SKU.
+Print the length of sales_data, product_details, and product_descriptions.
+Recommendations
+Utilize the pprint module for pretty printing Python data structures.
+Go to this site to read more about pprint.
+First, display data form sales_data, product_details, and product_descriptions.
+
+
+[ ]
+print("Sales Data:")
+sales_data
+
+Sales Data:
+{'AISJDKFJW93NJ': [10, 12, 15, 18, 20, 22, 25, 28, 26, 30, 32, 29, 27, 24],
+ 'DJKFIEI432FIE': [8, 10, 12, 15, 20, 18, 14, 13, 17, 10, 8, 11, 14, 16],
+ 'GGOENEBJ079499': [15, 18, 22, 25, 28, 20, 17, 23, 19, 21, 24, 27, 18, 20],
+ 'HJSKNWK429DJE': [30, 32, 35, 38, 40, 42, 45, 48, 50, 52, 55, 53, 49, 47],
+ 'JFKL3940NFKLJ': [18, 20, 22, 25, 28, 30, 32, 35, 38, 36, 33, 29, 26, 24],
+ 'LKDFJ49LSDJKL': [25, 28, 30, 32, 35, 38, 42, 40, 37, 34, 36, 31, 29, 27],
+ 'MWKDI3JFK39SL': [30, 35, 40, 45, 50, 42, 37, 38, 41, 36, 33, 39, 40, 44],
+ 'NEKFJOWE9FDIW': [12, 15, 18, 20, 22, 24, 21, 23, 25, 28, 30, 27, 26, 29],
+ 'OWEJL398FWJLK': [20, 22, 25, 28, 30, 32, 35, 38, 36, 33, 29, 26, 24, 27],
+ 'XPLFJW2490XJN': [5, 8, 9, 12, 15, 10, 14, 16, 20, 18, 22, 25, 19, 21]}
+
+[ ]
+print("Product Details:")
+product_details
+Product Details:
+{'AISJDKFJW93NJ': {'product_name': 'Wall Art Print',
+  'brand': 'ArtCraft',
+  'model': 'NatureCanvas-1001',
+  'specifications': 'Canvas print, Ready to hang',
+  'price': '$49.99',
+  'availability': 'In stock'},
+ 'DJKFIEI432FIE': {'product_name': "Men's Running Shoes",
+  'brand': 'RunFit',
+  'model': 'SpeedX-500',
+  'specifications': 'Size 10, Lightweight design, Breathable material',
+  'price': '$79.99',
+  'availability': 'In stock'},
+ 'GGOENEBJ079499': {'product_name': 'Smartphone',
+  'brand': 'XYZ Electronics',
+  'model': 'ABC-2000',
+  'specifications': '6.5-inch display, 128GB storage, 16MP camera',
+  'price': '$499.99',
+  'availability': 'In stock'},
+ 'HJSKNWK429DJE': {'product_name': 'Wireless Earbuds',
+  'brand': 'SoundSync',
+  'model': 'TunePro-2022',
+  'specifications': 'Bluetooth 5.0, 20 hours battery life, Touch controls',
+  'price': '$89.99',
+  'availability': 'In stock'},
+ 'JFKL3940NFKLJ': {'product_name': 'Resistance Bands Set',
+  'brand': 'FitFlex',
+  'model': 'StrengthPro-300',
+  'specifications': '5 bands, Varying resistance levels, Portable',
+  'price': '$34.99',
+  'availability': 'In stock'},
+ 'LKDFJ49LSDJKL': {'product_name': 'Anti-Aging Face Cream',
+  'brand': 'GlowBeauty',
+  'model': 'AgeDefy-300',
+  'specifications': 'Natural ingredients, Hydrating formula',
+  'price': '$39.99',
+  'availability': 'In stock'},
+ 'MWKDI3JFK39SL': {'product_name': 'Fictional Novel',
+  'brand': 'BestBooks',
+  'model': None,
+  'specifications': 'Paperback, 300 pages',
+  'price': '$14.99',
+  'availability': 'In stock'},
+ 'NEKFJOWE9FDIW': {'product_name': 'Board Game',
+  'brand': 'FamilyFun',
+  'model': 'GameNight-2022',
+  'specifications': '2-6 players, Ages 8 and up',
+  'price': '$29.99',
+  'availability': 'In stock'},
+ 'OWEJL398FWJLK': {'product_name': 'Yoga Mat',
+  'brand': 'ZenFitness',
+  'model': 'EcoMat-500',
+  'specifications': 'Non-slip, 6mm thickness, Eco-friendly material',
+  'price': '$19.99',
+  'availability': 'In stock'},
+ 'XPLFJW2490XJN': {'product_name': 'Robot Vacuum Cleaner',
+  'brand': 'CleanTech',
+  'model': 'AutoSweep-9000',
+  'specifications': 'Smart navigation, HEPA filter, 90 minutes runtime',
+  'price': '$249.99',
+  'availability': 'In stock'}}
+
+[ ]
+print("Product Descriptions:")
+product_descriptions
+Product Descriptions:
+{'AISJDKFJW93NJ': "Transform your living space with ArtCraft's NatureCanvas-1001 Wall Art Print.\nThis canvas print, ready to hang, brings the beauty of nature into your home.\nWith dimensions of 16 x 20 inches and a 4.6/5 stars rating, it's a stunning addition to your decor, creating a focal point that captures attention and sparks conversation.",
+ 'DJKFIEI432FIE': "Elevate your running experience with the RunFit SpeedX-500 Men's Running Shoes.\nDesigned for performance, these shoes feature a lightweight design, breathable material, and are available in vibrant Red, Blue, and classic Black.\nWhether you're a seasoned runner or just starting, these shoes provide comfort and support for every stride, ensuring you reach new milestones effortlessly.",
+ 'GGOENEBJ079499': 'Dive into the future with the XYZ Electronics Smartphone, model ABC-2000.\nBoasting a 6.5-inch display, 128GB storage, and a 16MP camera, this powerful device redefines the smartphone experience.\nWith a sleek design and available in Black, Silver, and Blue, it combines cutting-edge technology with style, ensuring you stay connected in the most sophisticated way possible.',
+ 'HJSKNWK429DJE': "Immerse yourself in superior audio quality with SoundSync's TunePro-2022 Wireless Earbuds.\nFeaturing Bluetooth 5.0, 20 hours of battery life, and touch controls, these earbuds deliver a seamless and immersive listening experience.\nAvailable in Black and White, they combine style with functionality for music lovers on the go. \nWith a 4.7/5 stars rating, they stand out as a top choice in the realm of wireless audio.",
+ 'JFKL3940NFKLJ': "Embrace versatility in your workouts with FitFlex's StrengthPro-300 Resistance Bands Set.\nWith 5 bands offering varying resistance levels and portability, this set is your go-to for effective strength training.\nAvailable in Red, Yellow, and Blue, it caters to different fitness levels and adds a dynamic dimension to your exercise routine.",
+ 'LKDFJ49LSDJKL': "Rediscover youthful radiance with GlowBeauty's AgeDefy-300 Anti-Aging Face Cream.\nFormulated with natural ingredients and a hydrating formula, this skincare essential rejuvenates and nourishes your skin, leaving you with a vibrant and refreshed complexion.\nWith a stellar 4.7/5 stars rating, it's a must-have for those embracing the journey to ageless beauty.",
+ 'MWKDI3JFK39SL': "Immerse yourself in the world of storytelling with BestBooks' Fictional Novel.\nThis paperback, spanning 300 pages, promises a captivating journey through the pages of an engaging narrative.\nIdeal for avid readers seeking an escape, this novel, with a 4.6/5 stars rating, is a testament to its ability to weave a compelling tale that keeps you hooked until the last page.",
+ 'NEKFJOWE9FDIW': "Unleash the fun with FamilyFun's GameNight-2022 Board Game.\nDesigned for 2-6 players and suitable for ages 8 and up, this exciting game promises laughter and bonding moments for the entire family.\nWith a 4.4/5 stars rating, it's a testament to its ability to turn any ordinary night into an extraordinary game night filled with friendly competition and shared joy.",
+ 'OWEJL398FWJLK': "Elevate your yoga practice with ZenFitness' EcoMat-500 Yoga Mat.\nFeaturing a non-slip surface, 6mm thickness, and eco-friendly materials, this high-quality mat provides the perfect foundation for your workouts.\nAvailable in Purple, Green, and Blue, it not only enhances your comfort but also adds a touch of serenity to your exercise routine.",
+ 'XPLFJW2490XJN': 'Introducing the CleanTech AutoSweep-9000 Robot Vacuum Cleaner – your smart companion for automated cleaning.\nWith smart navigation, a HEPA filter, and a runtime of 90 minutes, this efficient device takes care of your cleaning needs.\nAvailable in White and Silver, it blends seamlessly into your home, making cleanliness a hassle-free experience.'}
+Create a list of product SKUs by extracting the product SKUs using dict.keys() from one of the three dicionaries, which can then be used to access details of a product.
+
+
+[ ]
+product_skus = list(product_details.keys())
+product_skus
+['AISJDKFJW93NJ',
+ 'DJKFIEI432FIE',
+ 'GGOENEBJ079499',
+ 'HJSKNWK429DJE',
+ 'JFKL3940NFKLJ',
+ 'LKDFJ49LSDJKL',
+ 'MWKDI3JFK39SL',
+ 'NEKFJOWE9FDIW',
+ 'OWEJL398FWJLK',
+ 'XPLFJW2490XJN']
+Display sales data, product details, and product description of a product using its product SKU.
+
+
+[ ]
+sales_data['AISJDKFJW93NJ']
+[10, 12, 15, 18, 20, 22, 25, 28, 26, 30, 32, 29, 27, 24]
+
+[ ]
+sales_data[product_skus[1]]
+[8, 10, 12, 15, 20, 18, 14, 13, 17, 10, 8, 11, 14, 16]
+
+[ ]
+product_details[product_skus[0]]
+{'product_name': 'Wall Art Print',
+ 'brand': 'ArtCraft',
+ 'model': 'NatureCanvas-1001',
+ 'specifications': 'Canvas print, Ready to hang',
+ 'price': '$49.99',
+ 'availability': 'In stock'}
+
+[ ]
+product_details[product_skus[1]]
+{'product_name': "Men's Running Shoes",
+ 'brand': 'RunFit',
+ 'model': 'SpeedX-500',
+ 'specifications': 'Size 10, Lightweight design, Breathable material',
+ 'price': '$79.99',
+ 'availability': 'In stock'}
+
+[ ]
+product_descriptions[product_skus[0]]
+
+
+[ ]
+product_descriptions[product_skus[1]]
+
+Display the length of sales_data, product_details, and product_descriptions.
+
+
+[ ]
+len(sales_data)
+10
+
+[ ]
+len(product_details)
+10
+
+[ ]
+len(product_descriptions)
+10
+Checklist
+Displayed sales data, product details, and product descriptions of all the products.
+The extracted product SKUs are AISJDKFJW93NJ, DJKFIEI432FIE, GGOENEBJ079499, HJSKNWK429DJE JFKL3940NFKLJ, LKDFJ49LSDJKL,MWKDI3JFK39SL, NEKFJOWE9FDIW,OWEJL398FWJLK, and XPLFJW2490XJN.
+Displayed sales data, product details, and product descriptions of a product using its product SKU.
+Length of sales_data, product_details, and product_descriptions is 10.
+Stage 2 - Create
+In the this stage, you will define a function create() to add sales data, product details, and product descriptions for a new product. You will also define some sub-functions to complete smaller tasks.
+
+You will achieve this by completing the following tasks:
+
+Task 4 - Add sales data
+Task 5 - Add product details
+Task 6 - Add product description
+Task 7 - Create function
+Task 4 - Add sales data
+Description
+In this task, you will write a function to add sales data for a new product give then SKU and the quantities that need to be added.
+
+Requirements
+Define a function named add_sales_data() that:
+Adds new sales data to the sales_data dicitionary using the sku as the key.
+The function should accept the following parameters:
+sales_data dictionary,
+sku value, and
+a list called quantities consisting of sales data for the new product.
+The function should return:
+The updated sales_data dictionary after creating the entry for the new SKU.
+Recommendations
+Provide the data description and requirements to ChatGPT along with the libraries that you are using and ask it to generate code for the function.
+If you get stuck somewhere, you can ask ChatGPT to explain the code to you and you can make edits as required.
+
+[ ]
+3 cells hidden
+Checklist
+Function add_sales_data() defined.
+Updated sales_data dictionary with new product SKU and data.
+Updated sales_data dictionary returned.
+Task 5 - Add product details
+Description
+In this task, you will write a function to add product details for the new product using its product SKU.
+
+Requirements
+Define a function named add_product_details() that adds new product details to the product_details dictionary using the SKU as the key.
+The function should accept three parameters:
+product_details: A dictionary containing existing product details.
+sku: A string representing the product SKU.
+product_info: A dictionary containing the details of the product, such as product name, brand, model, specifications, price, and availability.
+The function adds the product_info dictionary to the product_details dictionary with the provided SKU as the key. This operation updates the product_details dictionary with the new product's information.
+Return the updated product_details dictionary containing the new product entry.
+Recommendations
+Provide the data description and requirements to ChatGPT along with the libraries that you are using and ask it to generate code for the function.
+If you get stuck somewhere, you can ask ChatGPT to explain the code to you and you can make edits as required.
+
+[ ]
+def add_product_details(product_details, sku, product_info):
+    """
+    Create a new product details entry in the product details dictionary using the provided product information.
+
+    Parameters:
+        product_details (dict): The dictionary containing product details.
+        sku (str): The product SKU.
+        product_info (dict): A dictionary containing the details of the product, such as product name, brand, model, specifications, price, and availability.
+
+    Returns:
+        dict: The updated product details with the new product entry.
+    """
+
+    # Add the new SKU and its product information to the dictionary
+    product_details[sku] = product_info
+
+    return product_details
+
+Check your code here.
+
+
+[ ]
+product_details = add_product_details(product_details,
+                                      'TYS56KFJW93NJ',
+                                      {'Product name': 'Laptop',
+                                       'Brand': 'Acer',
+                                       'Model': 'Acer Aspire 3',
+                                       'Specifications': 'Intel Core i3 N305 Laptop (Windows 11 Home/8 GB/512 GB SSD) A314-36M, 35.56 cm (14") Full HD Display, 1.4 KG, Pure Silver',
+                                       'Price': 'INR 32,999.00',
+                                       'Availability': 'In stock'
+                                       })
+
+product_details
+{'AISJDKFJW93NJ': {'product_name': 'Wall Art Print',
+  'brand': 'ArtCraft',
+  'model': 'NatureCanvas-1001',
+  'specifications': 'Canvas print, Ready to hang',
+  'price': '$49.99',
+  'availability': 'In stock'},
+ 'DJKFIEI432FIE': {'product_name': "Men's Running Shoes",
+  'brand': 'RunFit',
+  'model': 'SpeedX-500',
+  'specifications': 'Size 10, Lightweight design, Breathable material',
+  'price': '$79.99',
+  'availability': 'In stock'},
+ 'GGOENEBJ079499': {'product_name': 'Smartphone',
+  'brand': 'XYZ Electronics',
+  'model': 'ABC-2000',
+  'specifications': '6.5-inch display, 128GB storage, 16MP camera',
+  'price': '$499.99',
+  'availability': 'In stock'},
+ 'HJSKNWK429DJE': {'product_name': 'Wireless Earbuds',
+  'brand': 'SoundSync',
+  'model': 'TunePro-2022',
+  'specifications': 'Bluetooth 5.0, 20 hours battery life, Touch controls',
+  'price': '$89.99',
+  'availability': 'In stock'},
+ 'JFKL3940NFKLJ': {'product_name': 'Resistance Bands Set',
+  'brand': 'FitFlex',
+  'model': 'StrengthPro-300',
+  'specifications': '5 bands, Varying resistance levels, Portable',
+  'price': '$34.99',
+  'availability': 'In stock'},
+ 'LKDFJ49LSDJKL': {'product_name': 'Anti-Aging Face Cream',
+  'brand': 'GlowBeauty',
+  'model': 'AgeDefy-300',
+  'specifications': 'Natural ingredients, Hydrating formula',
+  'price': '$39.99',
+  'availability': 'In stock'},
+ 'MWKDI3JFK39SL': {'product_name': 'Fictional Novel',
+  'brand': 'BestBooks',
+  'model': None,
+  'specifications': 'Paperback, 300 pages',
+  'price': '$14.99',
+  'availability': 'In stock'},
+ 'NEKFJOWE9FDIW': {'product_name': 'Board Game',
+  'brand': 'FamilyFun',
+  'model': 'GameNight-2022',
+  'specifications': '2-6 players, Ages 8 and up',
+  'price': '$29.99',
+  'availability': 'In stock'},
+ 'OWEJL398FWJLK': {'product_name': 'Yoga Mat',
+  'brand': 'ZenFitness',
+  'model': 'EcoMat-500',
+  'specifications': 'Non-slip, 6mm thickness, Eco-friendly material',
+  'price': '$19.99',
+  'availability': 'In stock'},
+ 'XPLFJW2490XJN': {'product_name': 'Robot Vacuum Cleaner',
+  'brand': 'CleanTech',
+  'model': 'AutoSweep-9000',
+  'specifications': 'Smart navigation, HEPA filter, 90 minutes runtime',
+  'price': '$249.99',
+  'availability': 'In stock'},
+ 'TYS56KFJW93NJ': {'Product name': 'Laptop',
+  'Brand': 'Acer',
+  'Model': 'Acer Aspire 3',
+  'Specifications': 'Intel Core i3 N305 Laptop (Windows 11 Home/8 GB/512 GB SSD) A314-36M, 35.56 cm (14") Full HD Display, 1.4 KG, Pure Silver',
+  'Price': 'INR 32,999.00',
+  'Availability': 'In stock'}}
+Checklist
+Function add_product_details() defined.
+Updated product_details dictionary with new product details.
+Updated product_details dictionary returned.
+Task 6 - Add product description
+Description
+In this task, you will write a function to add a product description for the new product using its product SKU.
+
+Requirements
+Define a function named add_product_description() that adds a new product description to the product_descriptions dictionary using the SKU as the key.
+The function should accept three parameters:
+product_descriptions: A dictionary containing existing product descriptions.
+sku: A string representing the product SKU.
+description: A string containing the description of the product.
+The function adds the new product description to the product_descriptions dictionary with the provided sku as the key. This operation updates the product_descriptions dictionary with the new product's description.
+Return the updated product_descriptions dictionary containing the new product description.
+Recommendations
+Provide the data description and requirements to ChatGPT along with the libraries that you are using and ask it to generate code for the function.
+If you get stuck somewhere, you can ask ChatGPT to explain the code to you and you can make edits as required.
+
+[ ]
+def add_product_description(product_descriptions, sku, description):
+    """
+    Adds a new product description to the product descriptions dictionary using the provided SKU as the key.
+
+    Parameters:
+        product_descriptions (dict): The dictionary containing existing product descriptions.
+        sku (str): The product SKU.
+        description (str): The description of the product.
+
+    Returns:
+        dict: The updated product descriptions dictionary with the new product description added.
+    """
+
+    # Add the new SKU and its description to the dictionary
+    product_descriptions[sku] = description
+
+    return product_descriptions
+Check your code here.
+
+
+[ ]
+product_descriptions = add_product_description(product_descriptions,
+                                               'TYS56KFJW93NJ',
+                                               'The Aspire 3 is ready to go with the latest Intel® Core™ i3 N-Series Processors1 with UHD Graphics—ideal for the entire family, with performance and productivity at the core. Perfect to get more out of work, study, or play.')
+product_descriptions
+{'AISJDKFJW93NJ': "Transform your living space with ArtCraft's NatureCanvas-1001 Wall Art Print.\nThis canvas print, ready to hang, brings the beauty of nature into your home.\nWith dimensions of 16 x 20 inches and a 4.6/5 stars rating, it's a stunning addition to your decor, creating a focal point that captures attention and sparks conversation.",
+ 'DJKFIEI432FIE': "Elevate your running experience with the RunFit SpeedX-500 Men's Running Shoes.\nDesigned for performance, these shoes feature a lightweight design, breathable material, and are available in vibrant Red, Blue, and classic Black.\nWhether you're a seasoned runner or just starting, these shoes provide comfort and support for every stride, ensuring you reach new milestones effortlessly.",
+ 'GGOENEBJ079499': 'Dive into the future with the XYZ Electronics Smartphone, model ABC-2000.\nBoasting a 6.5-inch display, 128GB storage, and a 16MP camera, this powerful device redefines the smartphone experience.\nWith a sleek design and available in Black, Silver, and Blue, it combines cutting-edge technology with style, ensuring you stay connected in the most sophisticated way possible.',
+ 'HJSKNWK429DJE': "Immerse yourself in superior audio quality with SoundSync's TunePro-2022 Wireless Earbuds.\nFeaturing Bluetooth 5.0, 20 hours of battery life, and touch controls, these earbuds deliver a seamless and immersive listening experience.\nAvailable in Black and White, they combine style with functionality for music lovers on the go. \nWith a 4.7/5 stars rating, they stand out as a top choice in the realm of wireless audio.",
+ 'JFKL3940NFKLJ': "Embrace versatility in your workouts with FitFlex's StrengthPro-300 Resistance Bands Set.\nWith 5 bands offering varying resistance levels and portability, this set is your go-to for effective strength training.\nAvailable in Red, Yellow, and Blue, it caters to different fitness levels and adds a dynamic dimension to your exercise routine.",
+ 'LKDFJ49LSDJKL': "Rediscover youthful radiance with GlowBeauty's AgeDefy-300 Anti-Aging Face Cream.\nFormulated with natural ingredients and a hydrating formula, this skincare essential rejuvenates and nourishes your skin, leaving you with a vibrant and refreshed complexion.\nWith a stellar 4.7/5 stars rating, it's a must-have for those embracing the journey to ageless beauty.",
+ 'MWKDI3JFK39SL': "Immerse yourself in the world of storytelling with BestBooks' Fictional Novel.\nThis paperback, spanning 300 pages, promises a captivating journey through the pages of an engaging narrative.\nIdeal for avid readers seeking an escape, this novel, with a 4.6/5 stars rating, is a testament to its ability to weave a compelling tale that keeps you hooked until the last page.",
+ 'NEKFJOWE9FDIW': "Unleash the fun with FamilyFun's GameNight-2022 Board Game.\nDesigned for 2-6 players and suitable for ages 8 and up, this exciting game promises laughter and bonding moments for the entire family.\nWith a 4.4/5 stars rating, it's a testament to its ability to turn any ordinary night into an extraordinary game night filled with friendly competition and shared joy.",
+ 'OWEJL398FWJLK': "Elevate your yoga practice with ZenFitness' EcoMat-500 Yoga Mat.\nFeaturing a non-slip surface, 6mm thickness, and eco-friendly materials, this high-quality mat provides the perfect foundation for your workouts.\nAvailable in Purple, Green, and Blue, it not only enhances your comfort but also adds a touch of serenity to your exercise routine.",
+ 'XPLFJW2490XJN': 'Introducing the CleanTech AutoSweep-9000 Robot Vacuum Cleaner – your smart companion for automated cleaning.\nWith smart navigation, a HEPA filter, and a runtime of 90 minutes, this efficient device takes care of your cleaning needs.\nAvailable in White and Silver, it blends seamlessly into your home, making cleanliness a hassle-free experience.',
+ 'TYS56KFJW93NJ': 'The Aspire 3 is ready to go with the latest Intel® Core™ i3 N-Series Processors1 with UHD Graphics—ideal for the entire family, with performance and productivity at the core. Perfect to get more out of work, study, or play.'}
+Checklist
+Function add_product_description() defined
+Updated product_descriptions dictionary with new description
+Updated product_descriptions dictionary returned
+Task 7 - Create function
+Description
+In this task, you will write a function that combines the functionalities of adding sales data, product details, and product description for a new product SKU.
+
+Requirements
+Define a function named create() that collects comprehensive information about a new product from the user, validates the input, and updates the respective dictionaries with product details, sales data, and product descriptions.
+The function should accept three parameters:
+product_details: A dictionary containing existing product details. Each entry maps an SKU to its corresponding product details.
+sales_data: A dictionary containing sales data. Each entry maps an SKU to a list of sales quantities for the last 14 days.
+product_descriptions: A dictionary containing product descriptions. Each entry maps an SKU to its corresponding textual description.
+The function performs several operations:
+Prompts the user to input the SKU, which must be exactly 13 characters long. If the SKU does not meet this requirement, print an error message and terminate the function without updating any dictionaries.
+Prompts the user to enter sales data for the last 14 days, which must consist of exactly 14 integers. If the input does not meet this criterion, print an error message and terminate the function without updating any dictionaries.
+Collects product details from the user, including name, brand, model, specifications, price, and availability. These inputs are required but not subject to specific validation criteria for this function.
+Prompts the user for a product description, which is also required for successful product registration.
+If all inputs are validated successfully, the function updates the product_details, sales_data, and product_descriptions dictionaries with the new product information and prints a success message.
+Returns a tuple containing the updated product_details, sales_data, and product_descriptions dictionaries in that order.
+The function is designed for use when a new product is to be added to the system and requires the caller to pass the current state of the product_details, sales_data, and product_descriptions dictionaries. It returns their updated states, reflecting the addition of the new product.
+Recommendations
+You can use if-else statements to check the validity of the data inputted by the user.
+Use a list comprehension to prepare the sales data before saving it in the dictionary.
+Use the previously defined functions to perform the actions after validating user's input.
+Provide the data description and requirements to ChatGPT along with the libraries that you are using and ask it to generate code for the function.
+If you get stuck somewhere, you can ask ChatGPT to explain the code to you and you can make edits as required.
+
+[ ]
+def create(product_details, sales_data, product_descriptions):
+    """
+    Collects comprehensive information about a new product from the user, validates the input, and updates the respective dictionaries with product details, sales data, and descriptions.
+
+    This function performs a series of prompts to the user to input the SKU, sales data for the last 14 days, product details (including name, brand, model, specifications, price, and availability), and a product description. Each input is validated for specific criteria:
+
+    - The SKU must be exactly 13 characters long.
+    - Sales data must consist of exactly 14 integers, representing sales for the last 14 days.
+    - Product details and description inputs are collected without specific validation but are required for successful product registration.
+
+    If any validation fails, the function prints an error message and terminates without updating any of the dictionaries, ensuring data integrity and consistency across product records.
+
+    Parameters:
+        product_details (dict): A dictionary containing existing product details. Each entry maps an SKU to its corresponding product details.
+        sales_data (dict): A dictionary containing sales data. Each entry maps an SKU to a list of sales quantities for the last 14 days.
+        product_descriptions (dict): A dictionary containing product descriptions. Each entry maps an SKU to its corresponding textual description.
+
+    Returns:
+        tuple: A tuple containing the updated dictionaries (product_details, sales_data, product_descriptions) in that order.
+
+    Usage:
+        The function is designed to be called when a new product is to be added to the system. It requires the caller to pass the current state of the product_details, sales_data, and product_descriptions dictionaries, and returns their updated states.
+    """
+    # Get SKU from user
+    sku = input("Enter the SKU (exactly 13 characters): ")
+    if len(sku) != 13:
+        print("Error: SKU must be 13 characters long.")
+        return product_details, sales_data, product_descriptions
+
+    # Get sales data from user
+    sales_input = input("Enter sales data for the last 14 days (comma-separated integers): ")
+    sales_quantities = sales_input.split(',')
+    if len(sales_quantities) != 14:
+        print("Error: Sales data must consist of exactly 14 integers.")
+        return product_details, sales_data, product_descriptions
+    sales_quantities = [int(quantity) for quantity in sales_quantities]
+
+    # Get product details from user
+    name = input("Enter product name: ")
+    brand = input("Enter brand: ")
+    model = input("Enter model: ")
+    specifications = input("Enter specifications: ")
+    price = input("Enter price: ")
+    availability = input("Enter availability: ")
+
+    product_info = {
+      "name": name,
+      "brand": brand,
+      "model": model,
+      "specifications": specifications,
+      "price": price,
+      "availability": availability
+    }
+
+    description = input("Enter product description: ")
+
+    # Assuming all inputs are now valid, call the function to add data
+
+    sales_dats = add_sales_data(sales_data, sku, sales_quantities)
+    product_details = add_product_details(product_details, sku, product_info)
+    product_descriptions = add_product_description(product_descriptions, sku, description)
+
+    # Print a single success message after all data have been successfully added
+
+    print("Product added successfully!")
+
+    return product_details, sales_data, product_descriptions
+
+
+Check your code here.
+
+
+[ ]
+product_details, sales_data, product_descriptions = create(product_details, sales_data, product_descriptions)
+Enter the SKU (exactly 13 characters): TYS56KFJW93NJ
+Enter sales data for the last 14 days (comma-separated integers): 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+Enter product name: Laptop
+Enter brand: Acer
+Enter model:  Acer Aspire 3
+Enter specifications: Intel Core i3 N305 Laptop (Windows 11 Home/8 GB/512 GB SSD) A314-36M, 35.56 cm (14") Full HD Display, 1.4 KG, Pure Silver
+Enter price: INR 32,999.00
+Enter availability: In stock
+Enter product description: The Aspire 3 is ready to go with the latest Intel® Core™ i3 N-Series Processors1 with UHD Graphics—ideal for the entire family, with performance and productivity at the core. Perfect to get more out of work, study, or play.
+Product added successfully!
+Checklist
+Prompt for and validate SKU length (13 characters).
+Collected sales data for 14 days and ensure it includes exactly 14 integers.
+Gathered product name, brand, model, specifications, price, and availability
+Collected a textual description of the product.
+Updated product_details, sales_data, and product_descriptions dictionaries after successful data validation.
+Returned the updated dictionaries in the correct order.
+Performed all validations before dictionary updates to maintain data integrity.
+Stage 3 - Read
+In this stage, you will focus on reading and displaying the existing data for products. This involves fetching and presenting information such as sales data, product details, and product descriptions based on the product sku the user inputs.
+
+Task 8 - Display sales data
+Task 9 - Display product details
+Task 10 - Display product descriptions
+Task 11 - Read function
+Task 8 - Display sales data
+Description
+This task involves creating a function to display sales data for a product based on its SKU.
+
+Requirements
+Define a function named display_sales_data() that displays sales data for a product with a given SKU.
+The function should accept two parameters:
+sales_data: A dictionary containing sales data.
+sku: A string representing the product SKU.
+The function should pretty print the sales data associated with the provided SKU.
+The function should not return any value.
+
+[ ]
+def display_sales_data(sales_data, sku):
+    """
+    Display sales data for a product with a given SKU.
+
+    Parameters:
+        sales_data (dict): The dictionary containing sales data.
+        sku (str): The product SKU.
+
+    Returns:
+        None
+    """
+
+    print(f"Sales data for SKU {sku}:")
+    pprint.pprint(sales_data.get(sku, 'product sku not found in sales dats'))
+
+
+Check your code here.
+
+
+[ ]
+display_sales_data(sales_data, 'TYS56KFJW93NJ')
+Sales data for SKU TYS56KFJW93NJ:
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Checklist
+Function display_sales_data() defined.
+Sales data for the specified product SKU displayed.
+Recommendations
+Use the pprint module for pretty printing the sales data.
+Read more about pprint here.
+Provide the data description and requirements to ChatGPT along with the libraries that you are using and ask it to generate code for the function.
+If you get stuck somewhere, you can ask ChatGPT to explain the code to you and you can make edits as required.
+Task 9 - Display product details
+Description
+This task involves creating a function to display product details for a product based on its SKU.
+
+Requirements
+Define a function named display_product_details() that displays product details for a product with a given SKU.
+The function should accept two parameters:
+product_details: A dictionary containing product details.
+sku: A string representing the product SKU.
+The function should pretty print the details of the product corresponding to the provided SKU.
+The function should not return any value.
+Recommendations
+Utilize the pprint module for pretty printing the product details.
+Read more about pprint here.
+Provide the data description and requirements to ChatGPT along with the libraries that you are using and ask it to generate code for the function.
+If you get stuck somewhere, you can ask ChatGPT to explain the code to you and you can make edits as required.
+
+[ ]
+def display_product_details(product_details, sku):
+    """
+    Display product details for a product with a given SKU.
+
+    Parameters:
+        product_details (dict): The dictionary containing product details.
+        sku (str): The product SKU.
+
+    Returns:
+        None
+    """
+
+    print(f"Product details for SKU {sku}:")
+    pprint.pprint(product_details.get(sku, 'product sku not found in product details'))
+
+Check your code here.
+
+
+[ ]
+display_product_details(product_details, 'TYS56KFJW93NJ')
+Product details for SKU TYS56KFJW93NJ:
+{'availability': 'In stock',
+ 'brand': 'Acer',
+ 'model': ' Acer Aspire 3',
+ 'name': 'Laptop',
+ 'price': 'INR 32,999.00',
+ 'specifications': 'Intel Core i3 N305 Laptop (Windows 11 Home/8 GB/512 GB '
+                   'SSD) A314-36M, 35.56 cm (14") Full HD Display, 1.4 KG, '
+                   'Pure Silver'}
+Checklist
+Function display_product_details() defined.
+Product details for the specified product SKU displayed.
+Task 10 - Display product description
+Description
+This task involves creating a function to display product description for a product based on its SKU.
+
+Requirements
+Define a function named display_product_descriptions() that displays the product description for a product with a given SKU.
+The function should accept two parameters:
+product_descriptions: A dictionary containing product descriptions.
+sku: A string representing the product SKU.
+The function should using pretty print the product description for that SKU.
+The function should not return any value.
+Recommendations
+Provide the data description and requirements to ChatGPT along with the libraries that you are using and ask it to generate code for the function.
+If you get stuck somewhere, you can ask ChatGPT to explain the code to you and you can make edits as required.
+
+[ ]
+def display_product_descriptions(product_descriptions, sku):
+    """
+    Display product description for a product with a given SKU.
+
+    Parameters:
+        product_descriptions (dict): The dictionary containing product descriptions.
+        sku (str): The product SKU.
+
+    Returns:
+        None
+    """
+
+    print(f"Product description for SKU {sku}:")
+    pprint.pprint(product_descriptions.get(sku, 'product sku not found in product descriptions'))
+
+Check your code here.
+
+
+[ ]
+display_product_descriptions(product_descriptions, 'AISJDKFJW93NJ')
+Product description for SKU AISJDKFJW93NJ:
+("Transform your living space with ArtCraft's NatureCanvas-1001 Wall Art "
+ 'Print.\n'
+ 'This canvas print, ready to hang, brings the beauty of nature into your '
+ 'home.\n'
+ "With dimensions of 16 x 20 inches and a 4.6/5 stars rating, it's a stunning "
+ 'addition to your decor, creating a focal point that captures attention and '
+ 'sparks conversation.')
+Checklist
+Function display_product_descriptions() defined.
+Product description for the specified product SKU displayed.
+Task 11 - Read function
+Description
+This task involves creating a main function read() that calls the functions defined in tasks 8, 9, and 10 to display sales data, product details, and product description.
+
+Requirements
+Define a function named read() that reads and displays sales data, product details, and product descriptions for a given product SKU.
+The function should accept three parameters:
+sales_data: A dictionary containing sales data. Each entry maps an SKU to a list of sales quantities.
+product_details: A dictionary containing product details. Each entry maps an SKU to its corresponding product details.
+product_descriptions: A dictionary containing product descriptions. Each entry maps an SKU to its corresponding textual description.
+The function performs the following operations:
+Prompts the user to input the SKU of the product they wish to inquire about.
+Checks if the provided SKU exists in any of the dictionaries (sales_data, product_details, or product_descriptions). If the SKU does not exist in any of these dictionaries, the function prints a message indicating that the product SKU was not found and exits early without performing any further actions.
+If the SKU exists, the function proceeds to display the sales data, product details, and product descriptions associated with that SKU. This is done by calling separate functions (display_sales_data(), display_product_details(), display_product_descriptions()) for each type of information, passing the respective dictionary and the SKU as arguments.
+The function returns None.
+This function is intended to provide a comprehensive overview of a product's information stored across different dictionaries, facilitating easy access to sales figures, detailed product information, and descriptive texts based on the product's SKU.
+Recommendations
+In cases where the SKU doesn't exist in the dataset, print a message and exit the function.
+Provide the data description and requirements to ChatGPT along with the libraries that you are using and ask it to generate code for the function.
+If you get stuck somewhere, you can ask ChatGPT to explain the code to you and you can make edits as required.
+
+[ ]
+def read(product_details, sales_data, product_descriptions):
+    """
+    Main function to read and display sales data, product details, and product descriptions.
+    Checks if the SKU exists in any of the dictionaries before proceeding. If the SKU does not exist, prints a message and exits the function early.
+
+    Parameters:
+        sales_data (dict): The dictionary containing sales data.
+        product_details (dict): The dictionary containing product details.
+        product_descriptions (dict): The dictionary containing product descriptions.
+
+    Returns:
+        None
+    """
+
+    sku = input("Enter the SKU of the product you want to inquire about: ")
+    if sku not in sales_data and sku not in product_details and sku not in product_descriptions:
+        print("Product SKU not found.")
+        return
+
+    display_sales_data(sales_data, sku)
+    display_product_details(product_details, sku)
+    display_product_descriptions(product_descriptions, sku)
+
+Check your code here.
+
+
+[ ]
+read(product_details, sales_data, product_descriptions)
+Enter the SKU of the product you want to inquire about: TYS56KFJW93NJ
+Sales data for SKU TYS56KFJW93NJ:
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Product details for SKU TYS56KFJW93NJ:
+{'availability': 'In stock',
+ 'brand': 'Acer',
+ 'model': ' Acer Aspire 3',
+ 'name': 'Laptop',
+ 'price': 'INR 32,999.00',
+ 'specifications': 'Intel Core i3 N305 Laptop (Windows 11 Home/8 GB/512 GB '
+                   'SSD) A314-36M, 35.56 cm (14") Full HD Display, 1.4 KG, '
+                   'Pure Silver'}
+Product description for SKU TYS56KFJW93NJ:
+('The Aspire 3 is ready to go with the latest Intel® Core™ i3 N-Series '
+ 'Processors1 with UHD Graphics—ideal for the entire family, with performance '
+ 'and productivity at the core. Perfect to get more out of work, study, or '
+ 'play.')
+Checklist
+Function read() defined.
+Checked whether the SKU exists in the dictionaries.
+Edge cases where the SKU doesn't exist were handled properly.
+User prompted to enter a product SKU.
+Displayed functions called with the entered product SKU.
+Stage 4 - Update
+In this stage, you will focus on modifying existing data in our system. This includes updating sales data, product details, and product descriptions for existing products. Let's outline the tasks for this stage:
+
+Task 12 - Update sales data
+Task 13 - Update product details
+Task 14 - Update product description
+Task 15 - Update function
+Task 12 - Update sales data
+Description
+This task involves updating the sales data of an existing product.
+
+Requirements
+Define a function named update_sales_data() that updates the sales data of an existing product with the provided quantities.
+The function should accept three parameters:
+sales_data: A dictionary containing sales data. Each entry maps an SKU to a list of sales quantities for the last 14 days.
+sku: A string representing the validated SKU of the product to be updated.
+quantities: A list of integers representing the validated sales quantities for all 14 days to be updated for the product.
+The function assumes that both the sku and quantities have already been validated before being passed to this function.
+The main operation of the function is to update the sales data for the given SKU with the new quantities provided. It directly assigns the new quantities to the corresponding SKU key in the sales_data dictionary.
+The function returns the updated sales_data dictionary after successfully updating the sales quantities for the specified SKU.
+This function is essential for maintaining accurate and up-to-date sales data for products within a system by allowing updates to sales figures based on new information or corrections to previously recorded data.
+Recommendations
+Provide the data description and requirements to ChatGPT along with the libraries that you are using and ask it to generate code for the function.
+If you get stuck somewhere, you can ask ChatGPT to explain the code to you and you can make edits as required.
+
+[ ]
+def update_sales_data(sales_data, sku, quantities):
+    """
+    Update the sales data of an existing product with the provided quantities. Assumes that both the SKU and quantities have been validated beforehand.
+
+    Parameters:
+        sales_data (dict): The dictionary containing sales data.
+        sku (str): The validated SKU of the product to update.
+        quantities (list of int): The validated quantities for all 14 days.
+
+    Returns:
+        dict: The updated sales data.
+    """
+
+    sales_data[sku] = quantities
+    return sales_data
+
+Check your code here.
+
+
+[ ]
+sales_data = update_sales_data(sales_data, 'TYS56KFJW93NJ', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] )
+sales_data
+{'AISJDKFJW93NJ': [10, 12, 15, 18, 20, 22, 25, 28, 26, 30, 32, 29, 27, 24],
+ 'DJKFIEI432FIE': [8, 10, 12, 15, 20, 18, 14, 13, 17, 10, 8, 11, 14, 16],
+ 'GGOENEBJ079499': [15, 18, 22, 25, 28, 20, 17, 23, 19, 21, 24, 27, 18, 20],
+ 'HJSKNWK429DJE': [30, 32, 35, 38, 40, 42, 45, 48, 50, 52, 55, 53, 49, 47],
+ 'JFKL3940NFKLJ': [18, 20, 22, 25, 28, 30, 32, 35, 38, 36, 33, 29, 26, 24],
+ 'LKDFJ49LSDJKL': [25, 28, 30, 32, 35, 38, 42, 40, 37, 34, 36, 31, 29, 27],
+ 'MWKDI3JFK39SL': [30, 35, 40, 45, 50, 42, 37, 38, 41, 36, 33, 39, 40, 44],
+ 'NEKFJOWE9FDIW': [12, 15, 18, 20, 22, 24, 21, 23, 25, 28, 30, 27, 26, 29],
+ 'OWEJL398FWJLK': [20, 22, 25, 28, 30, 32, 35, 38, 36, 33, 29, 26, 24, 27],
+ 'XPLFJW2490XJN': [5, 8, 9, 12, 15, 10, 14, 16, 20, 18, 22, 25, 19, 21],
+ 'TYS56KFJW93NJ': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}
+Checklist
+Update the sales_data dictionary with the new quantities.
+Return the new sales_data dictionary.
+Task 13 - Update product details
+Description
+This task involves updating the product details of an existing product.
+
+Requirements
+Define a function named update_product_details() that updates the product details of an existing product with the provided details.
+The function should accept three parameters:
+product_details: A dictionary containing product details. Each entry maps an SKU to its corresponding set of product details, such as name, brand, model, specifications, price, and availability.
+sku: A string representing the SKU of the product to be updated.
+updated_details: A dictionary containing the validated updated details for the product. This dictionary should include information similar to what is stored in the product_details dictionary, such as product name, brand, model, specifications, price, and availability.
+The function assumes that the existence of the sku in the product_details dictionary and the validity of the updated_details have already been validated prior to calling this function.
+The main operation of the function is to update the product details for the given SKU with the provided updated details. It directly assigns the updated_details dictionary to the corresponding SKU key in the product_details dictionary.
+The function returns the updated product_details dictionary after successfully updating the details for the specified SKU.
+This function is crucial for maintaining accurate and up-to-date product information within a system by allowing for modifications to product details based on new information, corrections to previously recorded information, or changes in product specifications.
+Recommendations
+Provide the data description and requirements to ChatGPT along with the libraries that you are using and ask it to generate code for the function.
+If you get stuck somewhere, you can ask ChatGPT to explain the code to you and you can make edits as required.
+
+[ ]
+def update_product_details(product_details, sku, updated_details):
+    """
+    Update the product details of an existing product with the provided details. Assumes that the SKU existence and the validity of the updated details have been validated beforehand.
+
+    Parameters:
+        product_details (dict): The dictionary containing product details.
+        sku (str): The SKU of the product to update.
+        updated_details (dict): The validated updated details for the product.
+
+    Returns:
+        dict: The updated product details.
+    """
+
+    product_details[sku] = updated_details
+    return product_details
+
+Check your code here.
+
+
+[ ]
+product_details = update_product_details(product_details,
+                                          'TYS56KFJW93NJ',
+                                          {'availability': 'In stock',
+                                           'brand': 'Acer',
+                                           'model': ' Acer Aspire 3',
+                                           'name': 'Laptop',
+                                           'price': 'INR 32,999.00',
+                                           'specifications': 'Intel Core i3 N305 Laptop (Windows 11 Home/8 GB/512 GB '
+                                           'SSD) A314-36M, 35.56 cm (14") Full HD Display, 1.4 KG, '
+                                           'Pure Silver'})
+product_details
+{'AISJDKFJW93NJ': {'product_name': 'Wall Art Print',
+  'brand': 'ArtCraft',
+  'model': 'NatureCanvas-1001',
+  'specifications': 'Canvas print, Ready to hang',
+  'price': '$49.99',
+  'availability': 'In stock'},
+ 'DJKFIEI432FIE': {'product_name': "Men's Running Shoes",
+  'brand': 'RunFit',
+  'model': 'SpeedX-500',
+  'specifications': 'Size 10, Lightweight design, Breathable material',
+  'price': '$79.99',
+  'availability': 'In stock'},
+ 'GGOENEBJ079499': {'product_name': 'Smartphone',
+  'brand': 'XYZ Electronics',
+  'model': 'ABC-2000',
+  'specifications': '6.5-inch display, 128GB storage, 16MP camera',
+  'price': '$499.99',
+  'availability': 'In stock'},
+ 'HJSKNWK429DJE': {'product_name': 'Wireless Earbuds',
+  'brand': 'SoundSync',
+  'model': 'TunePro-2022',
+  'specifications': 'Bluetooth 5.0, 20 hours battery life, Touch controls',
+  'price': '$89.99',
+  'availability': 'In stock'},
+ 'JFKL3940NFKLJ': {'product_name': 'Resistance Bands Set',
+  'brand': 'FitFlex',
+  'model': 'StrengthPro-300',
+  'specifications': '5 bands, Varying resistance levels, Portable',
+  'price': '$34.99',
+  'availability': 'In stock'},
+ 'LKDFJ49LSDJKL': {'product_name': 'Anti-Aging Face Cream',
+  'brand': 'GlowBeauty',
+  'model': 'AgeDefy-300',
+  'specifications': 'Natural ingredients, Hydrating formula',
+  'price': '$39.99',
+  'availability': 'In stock'},
+ 'MWKDI3JFK39SL': {'product_name': 'Fictional Novel',
+  'brand': 'BestBooks',
+  'model': None,
+  'specifications': 'Paperback, 300 pages',
+  'price': '$14.99',
+  'availability': 'In stock'},
+ 'NEKFJOWE9FDIW': {'product_name': 'Board Game',
+  'brand': 'FamilyFun',
+  'model': 'GameNight-2022',
+  'specifications': '2-6 players, Ages 8 and up',
+  'price': '$29.99',
+  'availability': 'In stock'},
+ 'OWEJL398FWJLK': {'product_name': 'Yoga Mat',
+  'brand': 'ZenFitness',
+  'model': 'EcoMat-500',
+  'specifications': 'Non-slip, 6mm thickness, Eco-friendly material',
+  'price': '$19.99',
+  'availability': 'In stock'},
+ 'XPLFJW2490XJN': {'product_name': 'Robot Vacuum Cleaner',
+  'brand': 'CleanTech',
+  'model': 'AutoSweep-9000',
+  'specifications': 'Smart navigation, HEPA filter, 90 minutes runtime',
+  'price': '$249.99',
+  'availability': 'In stock'},
+ 'TYS56KFJW93NJ': {'availability': 'In stock',
+  'brand': 'Acer',
+  'model': ' Acer Aspire 3',
+  'name': 'Laptop',
+  'price': 'INR 32,999.00',
+  'specifications': 'Intel Core i3 N305 Laptop (Windows 11 Home/8 GB/512 GB SSD) A314-36M, 35.56 cm (14") Full HD Display, 1.4 KG, Pure Silver'}}
+Checklist
+Updated the product_details dictionary with the new details.
+Returned the new product_details dictionary.
+Task 14 - Update product description
+Description
+This task involves updating the product description of an existing product.
+
+Requirements
+Define a function named update_product_description() that updates the product description of an existing product with the provided description.
+The function should accept three parameters:
+product_descriptions: A dictionary containing product descriptions. Each entry maps an SKU to its corresponding textual description.
+sku: A string representing the SKU of the product to be updated.
+updated_description: A string containing the validated updated description for the product.
+The function assumes that the existence of the sku in the product_descriptions dictionary and the validity of the updated_description have already been validated prior to calling this function.
+The main operation of the function is to update the product description for the given SKU with the provided updated description. It directly assigns the updated_description to the corresponding SKU key in the product_descriptions dictionary.
+The function returns the updated product_descriptions dictionary after successfully updating the description for the specified SKU.
+This function is essential for maintaining accurate and up-to-date product narratives within a system by allowing for modifications to product descriptions based on new insights, corrections to previously recorded descriptions, or enhancements to how a product is presented.
+Recommendations
+Provide the data description and requirements to ChatGPT along with the libraries that you are using and ask it to generate code for the function.
+If you get stuck somewhere, you can ask ChatGPT to explain the code to you and you can make edits as required.
+
+[ ]
+def update_product_description(product_descriptions, sku, updated_description):
+    """
+    Update the product description of an existing product with the provided description. Assumes that the SKU existence and the validity of the updated description have been validated beforehand.
+
+    Parameters:
+        product_descriptions (dict): The dictionary containing product descriptions.
+        sku (str): The SKU of the product to update.
+        updated_description (str): The validated updated description for the product.
+
+    Returns:
+        dict: The updated product descriptions.
+    """
+
+    product_descriptions[sku] = updated_description
+    return product_descriptions
+
+Check your code here.
+
+
+[ ]
+product_descriptions = update_product_description(product_descriptions, 'TYS56KFJW93NJ', 'The Aspire 3 is ready to go with the latest Intel® Core™ i3 N-Series Processors1 with UHD Graphics—ideal for the entire family, with performance and productivity at the core. Perfect to get more out of work, study, or play.')
+product_descriptions
+{'AISJDKFJW93NJ': "Transform your living space with ArtCraft's NatureCanvas-1001 Wall Art Print.\nThis canvas print, ready to hang, brings the beauty of nature into your home.\nWith dimensions of 16 x 20 inches and a 4.6/5 stars rating, it's a stunning addition to your decor, creating a focal point that captures attention and sparks conversation.",
+ 'DJKFIEI432FIE': "Elevate your running experience with the RunFit SpeedX-500 Men's Running Shoes.\nDesigned for performance, these shoes feature a lightweight design, breathable material, and are available in vibrant Red, Blue, and classic Black.\nWhether you're a seasoned runner or just starting, these shoes provide comfort and support for every stride, ensuring you reach new milestones effortlessly.",
+ 'GGOENEBJ079499': 'Dive into the future with the XYZ Electronics Smartphone, model ABC-2000.\nBoasting a 6.5-inch display, 128GB storage, and a 16MP camera, this powerful device redefines the smartphone experience.\nWith a sleek design and available in Black, Silver, and Blue, it combines cutting-edge technology with style, ensuring you stay connected in the most sophisticated way possible.',
+ 'HJSKNWK429DJE': "Immerse yourself in superior audio quality with SoundSync's TunePro-2022 Wireless Earbuds.\nFeaturing Bluetooth 5.0, 20 hours of battery life, and touch controls, these earbuds deliver a seamless and immersive listening experience.\nAvailable in Black and White, they combine style with functionality for music lovers on the go. \nWith a 4.7/5 stars rating, they stand out as a top choice in the realm of wireless audio.",
+ 'JFKL3940NFKLJ': "Embrace versatility in your workouts with FitFlex's StrengthPro-300 Resistance Bands Set.\nWith 5 bands offering varying resistance levels and portability, this set is your go-to for effective strength training.\nAvailable in Red, Yellow, and Blue, it caters to different fitness levels and adds a dynamic dimension to your exercise routine.",
+ 'LKDFJ49LSDJKL': "Rediscover youthful radiance with GlowBeauty's AgeDefy-300 Anti-Aging Face Cream.\nFormulated with natural ingredients and a hydrating formula, this skincare essential rejuvenates and nourishes your skin, leaving you with a vibrant and refreshed complexion.\nWith a stellar 4.7/5 stars rating, it's a must-have for those embracing the journey to ageless beauty.",
+ 'MWKDI3JFK39SL': "Immerse yourself in the world of storytelling with BestBooks' Fictional Novel.\nThis paperback, spanning 300 pages, promises a captivating journey through the pages of an engaging narrative.\nIdeal for avid readers seeking an escape, this novel, with a 4.6/5 stars rating, is a testament to its ability to weave a compelling tale that keeps you hooked until the last page.",
+ 'NEKFJOWE9FDIW': "Unleash the fun with FamilyFun's GameNight-2022 Board Game.\nDesigned for 2-6 players and suitable for ages 8 and up, this exciting game promises laughter and bonding moments for the entire family.\nWith a 4.4/5 stars rating, it's a testament to its ability to turn any ordinary night into an extraordinary game night filled with friendly competition and shared joy.",
+ 'OWEJL398FWJLK': "Elevate your yoga practice with ZenFitness' EcoMat-500 Yoga Mat.\nFeaturing a non-slip surface, 6mm thickness, and eco-friendly materials, this high-quality mat provides the perfect foundation for your workouts.\nAvailable in Purple, Green, and Blue, it not only enhances your comfort but also adds a touch of serenity to your exercise routine.",
+ 'XPLFJW2490XJN': 'Introducing the CleanTech AutoSweep-9000 Robot Vacuum Cleaner – your smart companion for automated cleaning.\nWith smart navigation, a HEPA filter, and a runtime of 90 minutes, this efficient device takes care of your cleaning needs.\nAvailable in White and Silver, it blends seamlessly into your home, making cleanliness a hassle-free experience.',
+ 'TYS56KFJW93NJ': 'The Aspire 3 is ready to go with the latest Intel® Core™ i3 N-Series Processors1 with UHD Graphics—ideal for the entire family, with performance and productivity at the core. Perfect to get more out of work, study, or play.'}
+Checklist
+Updated the product_descriptions dictionary with the new description.
+Returned the new product_descriptions dictionary.
+Task 15 - Update function
+Description
+This task involves creating a function named update() which calls appropriate update functions based on user input.
+
+Requirements
+Define a function named update() that updates product information, including sales data, product details, and product descriptions, for a specified SKU.
+The function should provide a menu-driven interface for users to select the type of product data they wish to update and input new values accordingly.
+Parameters:
+product_details: A dictionary containing existing product details, with SKU as keys and details as values.
+sales_data: A dictionary containing sales data, with SKU as keys and lists of sales quantities for the last 14 days as values.
+product_descriptions: A dictionary containing product descriptions, with SKU as keys and descriptions as values.
+The function begins by prompting the user to enter the SKU of the product they want to update.
+If the entered SKU does not exist in product_details, print a message indicating that the SKU was not found and exit the function early.
+The function then displays a menu with options to update sales data, product details, product description, or exit the process.
+For updating sales data, the user is prompted to enter new quantities for all 14 days. The input is validated to ensure it consists of exactly 14 integers.
+For updating product details, the user is prompted to enter updated values for product name, brand, model, specifications, price, and availability.
+For updating the product description, the user is prompted to enter a new product description.
+Each update option validates the corresponding input data before applying the update to ensure data integrity.
+The function returns a tuple containing the updated product_details, sales_data, and product_descriptions dictionaries in that order.
+Usage:
+The function is designed to be called when an existing product's information needs to be updated. It requires the caller to pass the current states of the product_details, sales_data, and product_descriptions dictionaries and returns their updated states after the modifications.
+Recommendations
+Provide the data description and requirements to ChatGPT along with the libraries that you are using and ask it to generate code for the function.
+If you get stuck somewhere, you can ask ChatGPT to explain the code to you and you can make edits as required.
+
+[ ]
+def update(product_details, sales_data, product_descriptions):
+    """
+    Updates product information including sales data, product details, and product descriptions for a specified SKU.
+    Prompts the user for the SKU and the type of data they wish to update. Validates the existence of the SKU and the
+    integrity of the input data before making any updates. Offers a menu-driven interface for the user to select which
+    data to update and inputs the new values accordingly.
+
+    Parameters:
+        product_details (dict): A dictionary containing existing product details, with SKU as keys.
+        sales_data (dict): A dictionary containing sales data, with SKU as keys and sales quantities as values.
+        product_descriptions (dict): A dictionary containing product descriptions, with SKU as keys.
+
+    Returns:
+        tuple: A tuple containing the updated dictionaries (product_details, sales_data, product_descriptions) in that order.
+
+    Usage:
+        The function should be called with the current states of the product_details, sales_data, and product_descriptions
+        dictionaries. It will return their updated states after the user has made their changes. The function supports updating
+        sales data with new quantities for all 14 days, modifying product details like name, brand, model, specifications, price,
+        and availability, and altering the product description. It ensures data integrity by validating the existence of the SKU
+        and the correctness of the updated values before applying any changes.
+    """
+
+    sku = input("Enter the SKU of the product you want to update: ")
+
+    #Validate the SKU existence in product details
+
+    if sku not in product_details:
+        print("Product SKU not found.")
+        return product_details, sales_data, product_descriptions
+
+    while True:
+      print("Select the type of data you want to update:")
+      print("1. Sales data")
+      print("2. Product details")
+      print("3. Product description")
+      print("4. Exit")
+
+      choice = input("Enter your choice (1/2/3/4): ")
+
+      if choice == '1':
+        # Validate and input sales data
+        quantities = input("Enter new quantities for all 14 days (comma-separated integers): ").split(',')
+        if len(quantities) != 14:
+           print("Invalid input. Please enter exactly 14 integers.")
+           continue
+        quantities = [int(quantity) for quantity in quantities]
+        update_sales_data(sales_data, sku, quantities)
+        print("Sales data updated successfully.")
+      elif choice == '2':
+        # Validate and input product details
+        updated_product_details = {}
+        updated_product_details['name'] = input("Enter new product name: ")
+        updated_product_details['brand'] = input("Enter new brand: ")
+        updated_product_details['model'] = input("Enter new model: ")
+        updated_product_details['specifications'] = input("Enter new specifications: ")
+        updated_product_details['price'] = input("Enter new price: ")
+        updated_product_details['availability'] = input("Enter new availability: ")
+        update_product_details(product_details, sku, updated_product_details)
+        print("Product details updated successfully.")
+      elif choice == '3':
+        # Validate and input product description
+        updated_description = input("Enter new product description: ")
+        update_product_description(product_descriptions, sku, updated_description)
+        print("Product description updated successfully.")
+      elif choice == '4':
+        break
+      else:
+        print("Invalid choice. Please select a valid option.")
+
+    return product_details, sales_data, product_descriptions
+
+
+
+Check your code here.
+
+
+[ ]
+product_details, sales_data, product_descriptions = update(product_details, sales_data, product_descriptions)
+Enter the SKU of the product you want to update: TYS56KFJW93NJ
+Select the type of data you want to update:
+1. Sales data
+2. Product details
+3. Product description
+4. Exit
+Enter your choice (1/2/3/4): 1
+Enter new quantities for all 14 days (comma-separated integers): 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+Sales data updated successfully.
+Select the type of data you want to update:
+1. Sales data
+2. Product details
+3. Product description
+4. Exit
+Enter your choice (1/2/3/4): 2
+Enter new product name: Acer Aspire 3 NEW
+Enter new brand: Acer
+Enter new model: Acer Aspire 3 NEWGEN
+Enter new specifications: Intel Core i5 N305 Laptop (Windows 11 Home/8 GB/512 GB SSD) A314-36M, 35.56 cm (14") Full HD Display, 1.2 KG, Pure Silver
+Enter new price: INR 34,999.00
+Enter new availability: In stock
+Product details updated successfully.
+Select the type of data you want to update:
+1. Sales data
+2. Product details
+3. Product description
+4. Exit
+Enter your choice (1/2/3/4): 4
+Checklist
+Prompted user for SKU of the product to update
+Validated whether the SKU exists in the dictionaries or not
+Provided options to the user for what aspect of data to update
+Called the appropriate update function based on user choice by passing the appropriate arguments
+Allowed user to exit or continue updating data
+Stage 5 - Delete
+In this stage, you will implement the functionality to delete entries from the data structures. This involves removing sales data, product details, and product descriptions associated with a given product SKU.
+
+In this task though, you will also need to delete the JSON and TXT files corresponding to the SKU entered by the user.
+
+Task 16 - Delete function
+Task 16 - Delete function
+Description
+In this task you will create a function called delete() which is responsible for deleting entries related to a given product SKU from the sales_data, product_details, and product_descriptions dictionaries.
+
+Requirements
+Define a function named delete() that deletes entries for a given SKU from sales data, product details, product descriptions dictionaries, and also deletes corresponding JSON and text files related to the product.
+The function should accept four parameters:
+sales_data: A dictionary containing sales data, with SKU as keys.
+product_details: A dictionary containing product details, with SKU as keys.
+product_descriptions: A dictionary containing product descriptions, with SKU as keys.
+main_folder: A string representing the location of the main folder containing subfolders for product details and product descriptions, where corresponding JSON and text files are stored.
+The function begins by prompting the user to enter the SKU of the product they wish to delete.
+If the SKU does not exist in the sales_data dictionary, print a message indicating that the SKU was not found and exit the function early.
+The function then proceeds to delete the entries for the specified SKU from the sales_data, product_details, and product_descriptions dictionaries.
+After successfully removing the entries from the dictionaries, the function attempts to delete the corresponding JSON file (containing product details) and text file (containing product descriptions) from the specified main_folder. It constructs the paths to these files based on the SKU and the folder structure.
+If the specified files exist, they are deleted, and a success message is printed.
+If a file does not exist, a message indicating that the file was not found is printed.
+The function returns a tuple containing the updated sales_data, product_details, and product_descriptions dictionaries.
+Usage:
+The function is designed for cases where a product is to be completely removed from the system, including its sales records, details, descriptions, and associated files. It requires the current states of the sales_data, product_details, and product_descriptions dictionaries and the path to the main_folder as inputs, and returns their updated states after the deletion.
+Recommendations
+Ensure that the function checks if the given SKU exists in each of the dictionaries before attempting deletion.
+Provide the data description and requirements to ChatGPT along with the libraries that you are using and ask it to generate code for the function.
+If you get stuck somewhere, you can ask ChatGPT to explain the code to you and you can make edits as required.
+
+[ ]
+def delete(sales_data, product_details, product_descriptions, main_folder):
+    """
+    Delete entries for a given SKU from sales data, product details, and product descriptions.
+    Delete corresponding JSON and text files.
+
+    Parameters:
+        sales_data (dict): The dictionary containing sales data.
+        product_details (dict): The dictionary containing product details.
+        product_descriptions (dict): The dictionary containing product descriptions.
+        main_folder (str): The location of the main folder containing product_details and product_descriptions folders.
+
+    Returns:
+        Tuple: The updated sales data, product details, and product descriptions dictionaries.
+    """
+
+    sku = input("Enter the SKU of the product you want to delete: ")
+    if sku not in sales_data:
+        print("Product SKU not found.")
+        return sales_data, product_details, product_descriptions
+
+    # Delete entries from Dictionaries
+    del sales_data[sku]
+    del product_details[sku]
+    del product_descriptions[sku]
+    print("Entries for the product have been deleted successfully.")
+
+    # Delete corresponding JSON and TXT files
+    json_file_path = os.path.join(main_folder, 'product_details', f'{sku}.json')
+    txt_file_path = os.path.join(main_folder, 'product_descriptions', f'{sku}.txt')
+
+    if os.path.exists(json_file_path):
+        os.remove(json_file_path)
+        print("JSON file deleted successfully.")
+    else:
+        print("JSON file not found.")
+
+    return sales_data, product_details, product_descriptions
+
+Check your code here.
+
+
+[ ]
+sales_data, product_details, product_descriptions = delete(sales_data, product_details, product_descriptions, main_folder_address)
+Enter the SKU of the product you want to delete: CMWKCILOP27KJ
+Product SKU not found.
+Checklist
+Defined the delete() function with the specified parameters.
+Checked if the given SKU exists in each dictionary before attempting deletion.
+Deleted the corresponding entry for the given SKU from each dictionary if it exists.
+Deleted the corresponding JSON and TXT files.
+Provided appropriate feedback messages indicating the outcome of the deletion process.
+Stage 6 - Bringing it all together
+In this stage, you will combine all the functions you have created so far into one main function called user_menu(). This function will work as an interface for the user where they can choose the operation they want to perform. If they choose to exit, the function will write the data into the disk. Therefore, besides the user_menu() function, you will also define the dump_data() function which writes the data into the disk.
+
+You will do this by performing the following tasks:
+
+Task 17 - Save data to disk
+Task 18 - Create a user menu
+Task 17 - Save data to disk
+Description
+In this task, learners are tasked with implementing a Python function named dump_data() that automates the process of persisting sales data, product details, and product descriptions into structured files within a specified directory. The function should efficiently organize and dump each type of data into its corresponding file format: CSV for sales data, JSON for product details, and plain text for product descriptions. This exercise challenges learners to apply file I/O operations, directory management, and data serialization techniques in Python, ensuring they gain practical experience with data persistence, manipulation, and organization on the filesystem.
+
+Requirements
+Define a function named dump_data() that dumps product details, sales data, and product descriptions into files within a specified main folder.
+The function should accept four parameters:
+sales_data: A dictionary containing sales data, with SKU as keys and a list of sales quantities for the last 14 days as values.
+product_details: A dictionary containing product details, with SKU as keys and details as values. Details include attributes like name, brand, model, specifications, price, and availability.
+product_descriptions: A dictionary containing product descriptions, with SKU as keys and the textual description of the product as values.
+main_folder: A string representing the location of the main folder, which should contain product_details and product_descriptions subfolders.
+The function performs the following operations:
+Dumps the sales_data into a CSV file named sales_data.csv located in the main_folder. Each row in the CSV file represents the sales data for a product, with fields for the SKU and sales quantities for each of the 14 days.
+Dumps each entry in product_details into a separate JSON file within the product_details subfolder of the main_folder. Each file is named after the SKU of the product and contains the details of that product in JSON format.
+Dumps each product description from product_descriptions into a separate TXT file within the product_descriptions subfolder of the main_folder. Each file is named after the SKU of the product and contains the textual description of that product.
+Prior to dumping product details and descriptions, the function checks if the respective subfolders exist. If not, it creates them.
+Usage:
+The function is designed to persist the current state of sales data, product details, and product descriptions to the filesystem, allowing for data backup and recovery. It organizes the persisted data into a structured directory and file system based on the specified main_folder path.
+Recommendations
+Ensure that you are writing the data down with the same folder structure as the original folder.
+You may want to learn more about the DictWriter() object from the csv library to write the sales data.
+Make sure that you open files with a 'w' parameter so that you are overwriting the files and not appending to them.
+Provide the data description and requirements to ChatGPT along with the libraries that you are using and ask it to generate code for the function.
+If you get stuck somewhere, you can ask ChatGPT to explain the code to you and you can make edits as required.
+
+[ ]
+def dump_data(sales_data, product_details, product_descriptions, main_folder):
+    """
+    Dump product details, sales data, and product descriptions to files.
+
+    Parameters:
+        sales_data (dict): The dictionary containing sales data.
+        product_details (dict): The dictionary containing product details.
+        product_descriptions (dict): The dictionary containing product descriptions.
+        main_folder (str): The location of the main folder containing product_details and product_descriptions folders.
+    """
+
+    # Dump sales data to CSV file
+    csv_file_path = os.path.join(main_folder, 'sales_data.csv')
+    with open(csv_file_path, 'w', newline='') as csvfile:
+      fieldnames = ['product_SKU', *map(str, range(1, 15))]
+      writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+      writer.writeheader()
+      for sku, quantities in sales_data.items():
+        row = {'product_SKU': sku}
+        for i, q in enumerate(quantities):
+          row[str(i+1)] = q
+        writer.writerow(row)
+
+    # Dump product details to JSON files
+    details_dir = os.path.join(main_folder, 'product_details')
+    if not os.path.exists(details_dir):
+      os.makedirs(details_dir)
+    for sku, details in product_details.items():
+      json_file_path = os.path.join(details_dir, f'{sku}.json')
+      with open(json_file_path, 'w') as jsonfile:
+        json.dump(details, jsonfile)
+
+    # Dump product description to TXT files
+    description_dir = os.path.join(main_folder, 'product_descriptions')
+    if not os.path.exists(description_dir):
+        os.makedirs(description_dir)
+    for sku, description in product_descriptions.items():
+        txt_file_path = os.path.join(description_dir, f'{sku}.txt')
+        with open(txt_file_path, 'w') as txt_file:
+            txt_file.write(description)
+
+
+
+
+Check your code here.
+
+
+[ ]
+dump_data(sales_data, product_details, product_descriptions, main_folder_address)
+Checklist
+Define the dump_data() function with the specified parameters.
+Saved the sales data, product details and the product description into the respective files.
+Ensured that the folder structure remains the same for future use.
+Task 18 - Create a user menu
+Description
+In this task, you will implement a Python function named user_menu() to act as the central interface for a product data management system. This function will integrate create, read, update, and delete (CRUD) operations, allowing users to manage product information interactively from the command line. Your implementation should handle data loading from a specified directory, user input processing to select the desired operation, and data persistence upon exit. This exercise aims to reinforce skills in Python related to function definition, user input handling, conditional logic, and file I/O operations, encapsulating them within a practical application for data management.
+
+Requirements
+Define a function named user_menu() that serves as the primary interface for managing product data, encompassing create, read, update, and delete (CRUD) operations.
+The function should accept one parameter:
+main_folder: A string that denotes the path to the main folder where the product data files are stored or will be stored.
+Tasks performed by the function include:
+Initially loading existing product data from the files located within main_folder by invoking a load_data() function. It is presumed that load_data() returns three dictionaries: product_details, sales_data, and product_descriptions, each representing different facets of the product data.
+Presenting a menu with options for the user to create new product data, read existing data, update current data, delete data, or exit the application.
+Depending on the user's choice, the function calls other specialized functions (create(), read(), update(), delete()) and passes the relevant parameters to these functions for the execution of the selected operation.
+For operations involving the creation, reading, and updating of data, it uses the current states of product_details, sales_data, and product_descriptions.
+For the delete operation, it additionally passes the main_folder path to specify the location from which the files associated with the deleted product should be removed.
+After the completion of create, update, or delete operations, the function now calls a dump_data() function to persist the most recent state of the product data into files within the main_folder. This ensures that changes are saved immediately after these operations.
+When the exit option (option 5) is chosen, it makes a final call to dump_data() to save the latest product data before printing an exit message and terminating the program loop.
+The function is designed to loop continuously, allowing the user to execute multiple operations until the exit option is selected.
+It ensures a robust user interaction experience by handling invalid inputs effectively and guiding the user back to the menu options.
+Usage scenario:
+The user_menu() function acts as the central component of a product data management system. It offers a user-friendly command-line interface for performing CRUD operations on product data and integrates file handling for data persistence. This approach guarantees that all changes to the data are immediately saved and can be accessed in subsequent sessions.
+Recommendations
+Provide the data description and requirements to ChatGPT along with the libraries that you are using and ask it to generate code for the function.
+If you get stuck somewhere, you can ask ChatGPT to explain the code to you and you can make edits as required.
+
+[ ]
+def user_menu(main_folder):
+    """
+    Main menu to manage product data including create, read, update, and delete operations.
+    """
+
+    # Load data from mainfolder.zip
+    product_details, sales_data, product_descriptions = load_data(main_folder)
+
+    while True:
+        print('\nMain Menu:')
+        print('1. Create')
+        print('2. Read')
+        print('3. Update')
+        print('4. Delete')
+        print('5. Exit')
+
+        choice = input('Enter your choice (1-5): ')
+
+        if choice == '1':
+            product_details, sales_data, product_descriptions = create(product_details, sales_data, product_descriptions)
+            dump_data(sales_data, product_details, product_descriptions, 'mainfolder')
+        elif choice == '2':
+            read(product_details, sales_data, product_descriptions)
+        elif choice == '3':
+            product_details, sales_data, product_descriptions = update(product_details, sales_data, product_descriptions)
+            dump_data(sales_data, product_details, product_descriptions, 'mainfolder')
+        elif choice == '4':
+            product_details, sales_data, product_descriptions = delete(product_details, sales_data, product_descriptions, "mainfolder")
+            dump_data(sales_data, product_details, product_descriptions, 'mainfolder')
+        elif choice == '5':
+            # Dump data to files and exit
+            dump_data(sales_data, product_details, product_descriptions, 'mainfolder')
+            print('Exiting...')
+            break
+        else:
+            print('Invalid choice. Please enter a number between 1 and 5.')
+
+
+Check your code here.
+
+
+[ ]
+user_menu(main_folder_address)
+
+Main Menu:
+1. Create
+2. Read
+3. Update
+4. Delete
+5. Exit
+Enter your choice (1-5): 1
+Enter the SKU (exactly 13 characters): TYS56KFJW93NJ
+Enter sales data for the last 14 days (comma-separated integers): 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+Enter product name: Laptop
+Enter brand: Acer
+Enter model: Acer Aspire 3
+Enter specifications: Intel Core i3 N305 Laptop (Windows 11 Home/8 GB/512 GB SSD) A314-36M, 35.56 cm (14") Full HD Display, 1.4 KG, Pure Silver
+Enter price: INR 32,999.00
+Enter availability: In stock
+Enter product description: The Aspire 3 is ready to go with the latest Intel® Core™ i3 N-Series Processors1 with UHD Graphics—ideal for the entire family, with performance and productivity at the core. Perfect to get more out of work, study, or play.
+Product added successfully!
+
+Main Menu:
+1. Create
+2. Read
+3. Update
+4. Delete
+5. Exit
+Enter your choice (1-5): 5
+Exiting...
+Checklist
+Defined the user_menu() function with the specified parameter for the main folder location.
+Loaded existing product data (product_details, sales_data, product_descriptions) from the specified main folder using a load_data() function at the start.
+Displayed a user-friendly menu that listed all possible operations: Create, Read, Update, Delete, and Exit.
+Processed user input to navigate through the menu options, calling the relevant function (create(), read(), update(), delete()) based on the selection and updated the product data accordingly. If "Exit" was selected, saved the current state of the product data into the main folder and exited the program.
+Ensured robust input validation, handling invalid choices by displaying an error message and prompting the user again.
+Before exiting the program, ensured data persistence by saving the updated product data to the specified main folder.
+Maintained the integrity of the folder structure during the function's operation to ensure consistency for future use.
